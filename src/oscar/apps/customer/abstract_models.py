@@ -46,7 +46,9 @@ class AbstractUser(auth_models.AbstractBaseUser,
     This is basically a copy of the core AbstractUser model but without a
     username field
     """
-    email = models.EmailField(_('email address'), unique=True)
+    # email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'))
+    mobile_number = models.PositiveBigIntegerField(_('Mobile Number'), unique=True)
     first_name = models.CharField(
         _('First name'), max_length=255, blank=True)
     last_name = models.CharField(
@@ -64,7 +66,8 @@ class AbstractUser(auth_models.AbstractBaseUser,
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    # USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'mobile_number'
 
     class Meta:
         abstract = True
@@ -73,7 +76,7 @@ class AbstractUser(auth_models.AbstractBaseUser,
 
     def clean(self):
         super().clean()
-        self.email = self.__class__.objects.normalize_email(self.email)
+        # self.email = self.__class__.objects.normalize_email(self.email)
 
     def get_full_name(self):
         """
@@ -88,11 +91,11 @@ class AbstractUser(auth_models.AbstractBaseUser,
         """
         return self.first_name
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
-        """
-        Send an email to this user.
-        """
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+    # def email_user(self, subject, message, from_email=None, **kwargs):
+    #     """
+    #     Send an email to this user.
+    #     """
+    #     send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def _migrate_alerts_to_user(self):
         """
@@ -101,6 +104,7 @@ class AbstractUser(auth_models.AbstractBaseUser,
         """
         ProductAlert = self.alerts.model
         alerts = ProductAlert.objects.filter(
+            # email=self.email, status=ProductAlert.ACTIVE)
             email=self.email, status=ProductAlert.ACTIVE)
         alerts.update(user=self, key='', email='')
 
