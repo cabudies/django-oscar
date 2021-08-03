@@ -309,7 +309,8 @@ INSTALLED_APPS = [
 # Add Oscar's custom auth backend so users can sign in using their email
 # address.
 AUTHENTICATION_BACKENDS = (
-    'oscar.apps.customer.auth_backends.EmailBackend',
+    # 'oscar.apps.customer.auth_backends.EmailBackend',
+    'oscar.apps.customer.auth_backends.MobileBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

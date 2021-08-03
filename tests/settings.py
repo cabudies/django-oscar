@@ -131,7 +131,8 @@ MIDDLEWARE = [
 
 
 AUTHENTICATION_BACKENDS = (
-    'oscar.apps.customer.auth_backends.EmailBackend',
+    # 'oscar.apps.customer.auth_backends.EmailBackend',
+    'oscar.apps.customer.auth_backends.MobileBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

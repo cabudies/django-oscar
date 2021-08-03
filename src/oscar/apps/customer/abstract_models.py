@@ -11,17 +11,17 @@ from oscar.core.compat import AUTH_USER_MODEL
 
 class UserManager(auth_models.BaseUserManager):
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, mobile_number, password=None, **extra_fields):
         """
         Creates and saves a User with the given email and
         password.
         """
         now = timezone.now()
-        if not email:
-            raise ValueError('The given email must be set')
-        email = UserManager.normalize_email(email)
+        # if not email:
+        #     raise ValueError('The given email must be set')
+        # email = UserManager.normalize_email(email)
         user = self.model(
-            email=email, is_staff=False, is_active=True,
+            mobile_number=mobile_number, is_staff=False, is_active=True,
             is_superuser=False,
             last_login=now, date_joined=now, **extra_fields)
 
@@ -29,8 +29,8 @@ class UserManager(auth_models.BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        u = self.create_user(email, password, **extra_fields)
+    def create_superuser(self, mobile_number, password, **extra_fields):
+        u = self.create_user(mobile_number, password, **extra_fields)
         u.is_staff = True
         u.is_active = True
         u.is_superuser = True

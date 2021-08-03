@@ -47,6 +47,7 @@ sandbox_clean: ## Clean sandbox images,cache,static and database
 	-rm -rf sandbox/public/static
 	-rm -f sandbox/db.sqlite
 	# Create database
+	sandbox/manage.py makemigrations
 	sandbox/manage.py migrate
 
 sandbox_load_user: ## Load user data into sandbox
